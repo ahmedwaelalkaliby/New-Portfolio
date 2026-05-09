@@ -1,8 +1,0 @@
-[37884:22620:0509/062507.727:ERROR:chrome\installer\util\google_update_settings.cc:265] Failed opening key Software\Google\Update\ClientStateMedium\{8A69D345-D564-463c-AFF1-A69D9E530F96} to set usagestats; result: 5
-[37884:32204:0509/062507.973:ERROR:content\browser\gpu\gpu_process_host.cc:999] GPU process exited unexpectedly: exit_code=-1073741790
-[37884:32204:0509/062508.037:ERROR:content\browser\gpu\gpu_process_host.cc:999] GPU process exited unexpectedly: exit_code=-1073741790
-[37884:32204:0509/062508.090:ERROR:content\browser\gpu\gpu_process_host.cc:999] GPU process exited unexpectedly: exit_code=-1073741790
-[37884:32204:0509/062508.121:ERROR:content\browser\gpu\gpu_process_host.cc:999] GPU process exited unexpectedly: exit_code=-1073741790
-[37884:32204:0509/062508.175:ERROR:content\browser\gpu\gpu_process_host.cc:999] GPU process exited unexpectedly: exit_code=-1073741790
-[37884:32204:0509/062508.198:ERROR:content\browser\gpu\gpu_process_host.cc:999] GPU process exited unexpectedly: exit_code=-1073741790
-[37884:32204:0509/062508.200:FATAL:content\browser\gpu\gpu_data_manager_impl_private.cc:417] GPU process isn't usable. Goodbye.
