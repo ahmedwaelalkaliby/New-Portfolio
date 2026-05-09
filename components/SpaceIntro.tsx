@@ -388,10 +388,10 @@ export function SpaceIntro({ children }: SpaceIntroProps) {
     Rocket.add(engineParticles);
 
     const startPos = new THREE.Vector3(-3, 0.5, 5);
-    const endPos = new THREE.Vector3(10, -1, -28);
+    const endPos = new THREE.Vector3(5, 0, -20);
     const autoPos = new THREE.Vector3();
     const cameraStartPos = new THREE.Vector3(0, 2, 18);
-    const cameraEndPos = new THREE.Vector3(8.5, -0.5, -14);
+    const cameraEndPos = new THREE.Vector3(5, 1, -10);
     const cameraAutoPos = new THREE.Vector3();
     const lookTarget = new THREE.Vector3();
 
