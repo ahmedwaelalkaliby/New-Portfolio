@@ -144,7 +144,12 @@ export function SpaceIntro({ children }: SpaceIntroProps) {
     const renderPass = new RenderPass(scene, camera);
     composer.addPass(renderPass);
 
-    const bloomPass = new UnrealBloomPass(new THREE.Vector2(width, height), 0.35, 1.45, 0.3);
+    const bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(height, width),
+      0.55,
+      0.35,
+      0.65
+    );
     composer.addPass(bloomPass);
     composer.addPass(new OutputPass());
 
@@ -758,8 +763,8 @@ export function SpaceIntro({ children }: SpaceIntroProps) {
         const isMobileText = width < 768;
         const textOptions: TextGeometryParameters = {
           font,
-          size: isMobileText ? 0.42 : 0.55,
-          depth: 0.08,
+          size: isMobileText ? 0.48 : 0.65,
+          depth: 0.12,
           curveSegments: 20,
           bevelEnabled: true,
           bevelThickness: 0.015,
@@ -771,51 +776,12 @@ export function SpaceIntro({ children }: SpaceIntroProps) {
         nameGeo.computeBoundingBox();
         nameGeo.center();
 
-        const nameMat = new THREE.ShaderMaterial({
-          vertexShader: `
-            varying vec3 vNormal;
-            varying vec3 vWorldPos;
-            varying vec2 vUv;
-            void main(){
-              vNormal = normalize(normalMatrix * normal);
-              vWorldPos = (modelMatrix * vec4(position,1.0)).xyz;
-              vUv = uv;
-              gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
-            }
-          `,
-          fragmentShader: `
-            varying vec3 vNormal;
-            varying vec3 vWorldPos;
-            varying vec2 vUv;
-            uniform float uTime;
-            uniform vec2 uMouse;
-
-            void main(){
-              vec3 viewDir = normalize(cameraPosition - vWorldPos);
-              float fresnel = pow(1.0 - abs(dot(viewDir, vNormal)), 2.5);
-              vec3 col1 = vec3(0.0, 0.8, 1.0);
-              vec3 col2 = vec3(0.5, 0.2, 1.0);
-              float t = sin(vWorldPos.x * 2.0 + uTime * 1.5) * 0.5 + 0.5;
-              vec3 baseColor = mix(col1, col2, t);
-              float scanline = sin(vWorldPos.y * 40.0 + uTime * 3.0) * 0.08 + 0.92;
-              float mouseDist = length(uMouse);
-              float mouseGlow = smoothstep(1.5, 0.0, mouseDist) * 0.3;
-              float pulse = sin(uTime * 2.0) * 0.1 + 0.9;
-              vec3 finalColor = baseColor * scanline * pulse;
-              finalColor += vec3(0.1, 0.3, 0.8) * fresnel * 0.8;
-              finalColor += vec3(0.0, 0.5, 1.0) * mouseGlow;
-              float alpha = 0.95 + fresnel * 0.05;
-              gl_FragColor = vec4(finalColor, alpha);
-            }
-          `,
-          uniforms: {
-            uTime: { value: 0 },
-            uMouse: { value: new THREE.Vector2(0, 0) },
-          },
-          transparent: true,
-          blending: THREE.NormalBlending,
-          depthWrite: false,
-          side: THREE.DoubleSide,
+        const nameMat = new THREE.MeshStandardMaterial({
+          color: 0xdff8ff,
+          emissive: 0x0099ff,
+          emissiveIntensity: 0.25,
+          metalness: 0.2,
+          roughness: 0.25,
         });
 
         const nameMesh = new THREE.Mesh(nameGeo, nameMat);
@@ -832,7 +798,11 @@ export function SpaceIntro({ children }: SpaceIntroProps) {
         const subGeo = new TextGeometry("Full Stack Developer / Creative Engineer", subOptions);
         subGeo.computeBoundingBox();
         subGeo.center();
-        const subMat = nameMat.clone();
+        const subMat = new THREE.MeshBasicMaterial({
+          color: 0x9edfff,
+          transparent: true,
+          opacity: 0.95,
+        });
         const subMesh = new THREE.Mesh(subGeo, subMat);
         subMesh.name = "Ahmed_Name_Sub";
         subMesh.position.y = -0.7;
@@ -1035,13 +1005,51 @@ export function SpaceIntro({ children }: SpaceIntroProps) {
       Rocket.position.y += (autoPos.y + mouseOffsetY - Rocket.position.y) * 0.06;
       Rocket.position.z += (autoPos.z - Rocket.position.z) * 0.04;
 
-      const tiltZ = -mouse.x * 0.45 * controlStrength;
-      const tiltX = mouse.y * 0.25 * controlStrength;
-      const tiltY = mouse.x * 0.25 * controlStrength;
+      const rocketTarget = new THREE.Vector3(Planet.position.x, Planet.position.y, Planet.position.z);
 
-      Rocket.rotation.z += (tiltZ - Rocket.rotation.z) * 0.08;
-      Rocket.rotation.x += (tiltX - Rocket.rotation.x) * 0.08;
-      Rocket.rotation.y += (tiltY - Rocket.rotation.y) * 0.08;
+      const direction = new THREE.Vector3()
+        .subVectors(rocketTarget, Rocket.position)
+        .normalize();
+
+      if (direction.lengthSq() > 0.0001) {
+        const localNoseAxis = new THREE.Vector3(0, 1, 0); // rocket nose direction
+        const targetQuaternion = new THREE.Quaternion().setFromUnitVectors(
+          localNoseAxis,
+          direction
+        );
+
+        const uprightQuaternion = new THREE.Quaternion().setFromEuler(
+          new THREE.Euler(0.15, 0, -0.08)
+        );
+
+        const rotateStart = 0.12;
+        const rotateEnd = 0.35;
+
+        const rotateMix = THREE.MathUtils.smoothstep(
+          progress,
+          rotateStart,
+          rotateEnd
+        );
+
+        const finalQuaternion = uprightQuaternion.clone().slerp(
+          targetQuaternion,
+          rotateMix
+        );
+
+        const mouseStrength = 1 - progress * 0.8;
+
+        const bank = new THREE.Quaternion().setFromEuler(
+          new THREE.Euler(
+            mouse.y * 0.12 * mouseStrength,
+            0,
+            -mouse.x * 0.25 * mouseStrength
+          )
+        );
+
+        finalQuaternion.multiply(bank);
+
+        Rocket.quaternion.slerp(finalQuaternion, 0.08);
+      }
 
       cameraAutoPos.copy(cameraStartPos).lerp(cameraEndPos, cameraZoom);
       camera.position.x += (cameraAutoPos.x + mouse.x * 0.35 * (1 - progress) - camera.position.x) * 0.06;
