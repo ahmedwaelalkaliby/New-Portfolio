@@ -1,5 +1,5 @@
 "use client";
-
+import { ArrowDown } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -1182,7 +1182,7 @@ export function SpaceIntro({ children }: SpaceIntroProps) {
   return (
     <section
       ref={containerRef}
-      className="relative z-10 h-screen w-full cursor-crosshair overflow-hidden bg-black"
+      className="relative z-10 min-h-screen w-full cursor-crosshair bg-black"
       aria-label="Interactive space intro"
     >
       <div ref={sceneRef} data-space-intro-scene className="absolute inset-0 h-full w-full">
@@ -1201,18 +1201,21 @@ export function SpaceIntro({ children }: SpaceIntroProps) {
           </div>
         </div>
 
+      
 
-
-        <div className="pointer-events-none absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 items-center gap-4 px-4 text-[10px] font-light uppercase tracking-[0.3em] text-brand-200/50 sm:gap-5 sm:text-[11px]">
-          <span >Explore</span>
+        <div className="pointer-events-none absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 px-4 text-[7px] md:text-[10px] font-light uppercase tracking-[0.3em] text-brand-200/50 sm:gap-5 sm:text-[11px]">
+          <span >Scroll</span>
+          <span> Down</span>
+          <span className="h-px w-5 bg-brand-200/20" />
+          <span>To</span>
+          <span>Explore</span>
           <span className="h-px w-5 bg-brand-200/20" />
           <span>My</span>
-          <span className="h-px w-5 bg-brand-200/20" />
           <span>World</span>
         </div>
       </div>
 
-      <div ref={heroRef} data-space-intro-hero className="pointer-events-none absolute inset-0 z-30 opacity-0">
+      <div ref={heroRef} data-space-intro-hero className="pointer-events-none relative z-30 opacity-0 w-full">
         {children}
       </div>
     </section>

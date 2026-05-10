@@ -14,7 +14,7 @@ const Skills = dynamic(() => import("@/components/sections/skills").then((mod) =
 
 export default function Home() {
   return (
-    <main className="min-h-screen overflow-hidden bg-night text-white">
+    <main className="min-h-screen bg-night text-white">
       <Background />
       <CursorGlow />
       <ScrollProgress />

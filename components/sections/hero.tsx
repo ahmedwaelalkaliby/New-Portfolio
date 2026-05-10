@@ -78,7 +78,7 @@ export const Hero = memo(function Hero() {
             transition={{ delay: 0.45, duration: 0.7 }}
             className="mt-9 flex flex-wrap gap-4"
           >
-            <ButtonLink href="#projects">View Projects</ButtonLink>
+            <ButtonLink href="#projects" variant="secondary">View Projects</ButtonLink>
             <ButtonLink href={profile.github} variant="secondary">GitHub</ButtonLink>
           </motion.div>
 

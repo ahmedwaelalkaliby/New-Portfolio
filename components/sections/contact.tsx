@@ -62,7 +62,7 @@ export function Contact() {
           <div className="bg-slate-950/90 p-6 md:p-10">
             <SectionHeader />
             <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href={`mailto:${profile.email}`}>Contact Me</ButtonLink>
+              <ButtonLink href={`mailto:${profile.email}`} variant="secondary">Contact Me</ButtonLink>
               <ButtonLink href={profile.linkedin} variant="secondary">LinkedIn</ButtonLink>
             </div>
           </div>
