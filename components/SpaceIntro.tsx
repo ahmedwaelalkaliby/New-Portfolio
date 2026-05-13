@@ -896,23 +896,23 @@ export function SpaceIntro({ children }: SpaceIntroProps) {
     const applyResponsiveLayout = () => {
       const isMobile = width < 768;
 
-      basePlanetX = isMobile ? 0 : 12;
-      basePlanetY = isMobile ? -5 : -2;
+      basePlanetX = isMobile ? 5.8 : 12;
+      basePlanetY = isMobile ? -3.5 : -2;
       basePlanetScale = isMobile ? 0.75 : 1;
-      baseNameX = isMobile ? 0 : 2;
-      baseNameY = isMobile ? 0.5 : 3.5;
+      baseNameX = isMobile ? 1.2 : 2;
+      baseNameY = isMobile ? 2 : 3.5;
 
       camera.fov = isMobile ? 70 : 60;
       
-      // Top-down camera angle on mobile
-      cameraStartPos.set(0, isMobile ? 8 : 2, isMobile ? 15 : 18);
-      startPos.set(isMobile ? 0 : -3, isMobile ? 0.5 : 0.5, 5);
+      // Matches desktop direction (y=2, offset rocket)
+      cameraStartPos.set(0, 2, isMobile ? 16 : 18);
+      startPos.set(isMobile ? -1.8 : -3, 0.5, 5);
       
       camera.updateProjectionMatrix();
 
-      Rocket.scale.setScalar(isMobile ? 0.9 : 1);
+      Rocket.scale.setScalar(isMobile ? 0.85 : 1);
       Planet.scale.setScalar(basePlanetScale);
-      Ahmed_Name.scale.setScalar(isMobile ? 0.55 : 1);
+      Ahmed_Name.scale.setScalar(isMobile ? 0.65 : 1);
       Ahmed_Name.position.x = baseNameX;
       Ahmed_Name.position.y = baseNameY;
     };
