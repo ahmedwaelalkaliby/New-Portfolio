@@ -896,20 +896,25 @@ export function SpaceIntro({ children }: SpaceIntroProps) {
     const applyResponsiveLayout = () => {
       const isMobile = width < 768;
 
-      basePlanetX = isMobile ? 8.2 : 12;
-      basePlanetY = isMobile ? -3.1 : -2;
-      basePlanetScale = isMobile ? 0.82 : 1;
+      basePlanetX = isMobile ? 0 : 12;
+      basePlanetY = isMobile ? -5 : -2;
+      basePlanetScale = isMobile ? 0.75 : 1;
       baseNameX = isMobile ? 0 : 2;
-      baseNameY = isMobile ? 3.2 : 3.5;
+      baseNameY = isMobile ? 0.5 : 3.5;
 
-      camera.fov = isMobile ? 68 : 60;
-      camera.position.z = isMobile ? 21 : 18;
+      camera.fov = isMobile ? 70 : 60;
+      
+      // Top-down camera angle on mobile
+      cameraStartPos.set(0, isMobile ? 8 : 2, isMobile ? 15 : 18);
+      startPos.set(isMobile ? 0 : -3, isMobile ? 0.5 : 0.5, 5);
+      
       camera.updateProjectionMatrix();
 
-      Rocket.scale.setScalar(isMobile ? 0.76 : 1);
+      Rocket.scale.setScalar(isMobile ? 0.9 : 1);
       Planet.scale.setScalar(basePlanetScale);
-      Ahmed_Name.scale.setScalar(isMobile ? 0.72 : 1);
+      Ahmed_Name.scale.setScalar(isMobile ? 0.55 : 1);
       Ahmed_Name.position.x = baseNameX;
+      Ahmed_Name.position.y = baseNameY;
     };
 
     const handleResize = () => {
@@ -1201,7 +1206,7 @@ export function SpaceIntro({ children }: SpaceIntroProps) {
           </div>
         </div>
 
-      
+
 
         <div className="pointer-events-none absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 px-4 text-[7px] md:text-[10px] font-light uppercase tracking-[0.3em] text-brand-200/50 sm:gap-5 sm:text-[11px]">
           <span >Scroll</span>
@@ -1215,7 +1220,7 @@ export function SpaceIntro({ children }: SpaceIntroProps) {
         </div>
       </div>
 
-      <div ref={heroRef} data-space-intro-hero className="pointer-events-none relative z-30 opacity-0 w-full">
+      <div ref={heroRef} data-space-intro-hero className="pointer-events-none absolute inset-0 z-30 opacity-0 w-full h-full">
         {children}
       </div>
     </section>

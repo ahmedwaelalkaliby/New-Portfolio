@@ -17,7 +17,7 @@ export const Hero = memo(function Hero() {
   return (
     <section id="home" className="relative z-10 flex min-h-screen items-center overflow-hidden px-6 pb-16 pt-28">
       <div className="mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="max-w-3xl">
+        <div className="flex max-w-3xl flex-col items-center text-center lg:items-start lg:text-left">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -38,7 +38,7 @@ export const Hero = memo(function Hero() {
             <span className="block text-brand-200">Alkaliby</span>
           </motion.h1>
 
-          <div className="mt-6 flex min-h-10 items-center overflow-hidden text-xl font-semibold text-brand-200 sm:text-2xl">
+          <div className="mt-6 flex min-h-10 items-center justify-center overflow-hidden text-xl font-semibold text-brand-200 sm:text-2xl lg:justify-start">
             <motion.div
               key={roles[index]}
               initial={{ y: 30, opacity: 0 }}
@@ -62,7 +62,7 @@ export const Hero = memo(function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35, duration: 0.65 }}
-            className="mt-6 grid max-w-2xl gap-3 text-sm text-slate-300 sm:grid-cols-3"
+            className="mt-6 grid w-full max-w-2xl gap-3 text-sm text-slate-300 sm:grid-cols-3"
           >
             {["React systems", "Next.js products", "Motion interfaces"].map((item) => (
               <div key={item} className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
@@ -76,7 +76,7 @@ export const Hero = memo(function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.7 }}
-            className="mt-9 flex flex-wrap gap-4"
+            className="mt-9 flex flex-wrap justify-center gap-4 lg:justify-start"
           >
             <ButtonLink href="#projects" variant="secondary">View Projects</ButtonLink>
             <ButtonLink href={profile.github} variant="secondary">GitHub</ButtonLink>
